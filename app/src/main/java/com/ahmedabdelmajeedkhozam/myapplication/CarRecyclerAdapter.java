@@ -1,5 +1,6 @@
 package com.ahmedabdelmajeedkhozam.myapplication;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ahmedabdelmajeedkhozam.myapplication.model.Car;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -17,10 +19,11 @@ public class CarRecyclerAdapter extends RecyclerView.Adapter<CarViewHolder> {
 
     private List<Car> cars;
     public  static OnRecyclerViewItemClickListener listener;
-
-    public CarRecyclerAdapter(List<Car> cars, OnRecyclerViewItemClickListener listener) {
+Context context;
+    public CarRecyclerAdapter(Context context,List<Car> cars, OnRecyclerViewItemClickListener listener) {
         this.cars = cars;
         this.listener = listener;
+        this.context=context;
     }
 
     public void setCars(List<Car> cars) {
@@ -41,9 +44,11 @@ public class CarRecyclerAdapter extends RecyclerView.Adapter<CarViewHolder> {
 
         Car c = cars.get(position);
         if (c.getImage() != null && !c.getImage().isEmpty())
-            holder.iv.setImageURI(Uri.parse(c.getImage()));
+          //  holder.iv.setImageURI(Uri.parse(c.getImage()));
+        Picasso.with(context).load(c.getImage()).into(holder.iv);
         else {
-            holder.iv.setImageResource(R.drawable.car_2);
+           // holder.iv.setImageResource(R.drawable.car_2);
+            Picasso.with(context).load(R.drawable.car_1).into(holder.iv);
         }
         holder.tv_model.setText(c.getModel());
         holder.tv_color.setText(c.getColor());

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     CarRecyclerAdapter adapter;
     DatabaseAccess db;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Car> cars = db.getAllCars();
         db.close();
 
-        adapter = new CarRecyclerAdapter(cars, new OnRecyclerViewItemClickListener() {
+        adapter = new CarRecyclerAdapter( this,cars, new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClicked(int carId) {
                 Intent i = new Intent(getBaseContext(), ViewCarActivity.class);
